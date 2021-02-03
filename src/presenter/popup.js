@@ -29,7 +29,7 @@ export default class Popup {
     this._removePopupHandler = this._removePopupHandler.bind(this);
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
 
-    this._watchlistClickHandler = this._watchlistClickHandler.bind(this);
+    this._watchListClickHandler = this._watchListClickHandler.bind(this);
     this._watchedClickHandler = this._watchedClickHandler.bind(this);
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
 
@@ -95,7 +95,7 @@ export default class Popup {
   _setPopupHandlers() {
     this._popupComponent.setMouseDownHandler(this._removePopupHandler);
     document.addEventListener(`keydown`, this._escKeyDownHandler);
-    this._popupComponent.setWatchlistClickHandler(this._watchlistClickHandler);
+    this._popupComponent.setWatchListClickHandler(this._watchListClickHandler);
     this._popupComponent.setWatchedClickHandler(this._watchedClickHandler);
     this._popupComponent.setFavoriteClickHandler(this._favoriteClickHandler);
   }
@@ -103,7 +103,7 @@ export default class Popup {
   _removePopupHandlers() {
     this._popupComponent.removeMouseDownHandler(this._removePopupHandler);
     document.removeEventListener(`keydown`, this._escKeyDownHandler);
-    this._popupComponent.removeWatchlistClickHandler(this._watchlistClickHandler);
+    this._popupComponent.removeWatchListClickHandler(this._watchListClickHandler);
     this._popupComponent.removeWatchedClickHandler(this._watchedClickHandler);
     this._popupComponent.removeFavoriteClickHandler(this._favoriteClickHandler);
   }
@@ -150,7 +150,7 @@ export default class Popup {
     }
   }
 
-  _watchlistClickHandler() {
+  _watchListClickHandler() {
     this._changeData(
         UserAction.UPDATE_FILM,
         this._currentUpdateType,
@@ -158,7 +158,7 @@ export default class Popup {
             {},
             this._film,
             {
-              watchlist: !this._film.watchlist
+              isWatchList: !this._film.isWatchList
             }
         )
     );
@@ -172,8 +172,8 @@ export default class Popup {
             {},
             this._film,
             {
-              history: !this._film.history,
-              watchingDate: !this._film.history ? moment().format() : null
+              isWatched: !this._film.isWatched,
+              watchingDate: !this._film.isWatched ? moment().format() : null
             }
         )
     );
@@ -187,7 +187,7 @@ export default class Popup {
             {},
             this._film,
             {
-              favorites: !this._film.favorites
+              isFavorite: !this._film.isFavorite
             }
         )
     );

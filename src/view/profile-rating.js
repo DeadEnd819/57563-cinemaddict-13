@@ -26,7 +26,7 @@ export default class ProfileRating extends AbstractView {
   update(film) {
     this._films = film;
     const profileRatingElement = this.getElement().querySelector(`.profile__rating`);
-    const historyFilmsCount = this._films.filter((movie) => movie.history).length;
+    const historyFilmsCount = this._films.filter((movie) => movie.isWatched).length;
 
     this._profileRating = getRank(historyFilmsCount);
 

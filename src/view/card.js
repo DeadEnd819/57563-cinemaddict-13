@@ -4,7 +4,7 @@ import {DESCRIPTION_TEXT_LENGTH} from "../utils/const.js";
 import moment from "moment";
 
 const createFilmCardTemplate = (film) => {
-  const {poster, title, rating, date, duration, genres, description, comments, watchlist, history, favorites, id} = film;
+  const {poster, title, rating, date, duration, genres, description, comments, isWatchList, isWatched, isFavorite, id} = film;
   const filmYear = moment(date).format(`Y`);
   const filmDuration = humanizeReleaseDate(duration);
   const filmGenres = genres.slice(0, 1);
@@ -23,9 +23,9 @@ const createFilmCardTemplate = (film) => {
         <p class="film-card__description">${filmDescription}</p>
         <a class="film-card__comments">${comments.length} comments</a>
         <form class="film-card__controls">
-          <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${watchlist ? `film-card__controls-item--active` : ``}" data-list="watchlist">Add to watchlist</button>
-          <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${history ? `film-card__controls-item--active` : ``}" data-list="history">Mark as watched</button>
-          <button class="film-card__controls-item button film-card__controls-item--favorite ${favorites ? `film-card__controls-item--active` : ``}" data-list="favorites">Mark as favorite</button>
+          <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${isWatchList ? `film-card__controls-item--active` : ``}" data-list="watchlist">Add to watchlist</button>
+          <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${isWatched ? `film-card__controls-item--active` : ``}" data-list="history">Mark as watched</button>
+          <button class="film-card__controls-item button film-card__controls-item--favorite ${isFavorite ? `film-card__controls-item--active` : ``}" data-list="favorites">Mark as favorite</button>
         </form>
      </article>`
   );
@@ -35,7 +35,7 @@ export default class Card extends AbstractView {
   constructor(film) {
     super();
     this._film = film;
-    this._watchlistClickHandler = this._watchlistClickHandler.bind(this);
+    this._watchListClickHandler = this._watchListClickHandler.bind(this);
     this._watchedClickHandler = this._watchedClickHandler.bind(this);
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
   }
@@ -44,17 +44,17 @@ export default class Card extends AbstractView {
     return createFilmCardTemplate(this._film);
   }
 
-  _watchlistClickHandler(evt) {
+  _watchListClickHandler(evt) {
     evt.preventDefault();
     evt.target.classList.toggle(`film-card__controls-item--active`);
-    this._callback.watchlistClick();
+    this._callback.watchListClick();
   }
 
-  setWatchlistClickHandler(callback) {
-    this._callback.watchlistClick = callback;
+  setWatchListClickHandler(callback) {
+    this._callback.watchListClick = callback;
     this.getElement()
       .querySelector(`.film-card__controls-item--add-to-watchlist`)
-      .addEventListener(`click`, this._watchlistClickHandler);
+      .addEventListener(`click`, this._watchListClickHandler);
   }
 
   setWatchedClickHandler(callback) {
@@ -71,11 +71,11 @@ export default class Card extends AbstractView {
       .addEventListener(`click`, this._favoriteClickHandler);
   }
 
-  removeWatchlistClickHandler() {
+  removeWatchListClickHandler() {
     this.getElement()
       .querySelector(`.film-card__controls-item--add-to-watchlist`)
-      .removeEventListener(`click`, this._watchlistClickHandler);
-    this._callback.watchlistClick = null;
+      .removeEventListener(`click`, this._watchListClickHandler);
+    this._callback.watchListClick = null;
   }
 
   removeWatchedClickHandler() {

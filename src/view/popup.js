@@ -29,9 +29,9 @@ const createPopupTemplate = (data) => {
     writers,
     actors,
     comments,
-    watchlist,
-    history,
-    favorites,
+    isWatchList,
+    isWatched,
+    isFavorite,
     id
   } = data;
   const filmDuration = humanizeReleaseDate(duration);
@@ -97,13 +97,13 @@ const createPopupTemplate = (data) => {
                 </div>
 
                 <section class="film-details__controls">
-                  <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" data-list-checkbox ="watchlist" ${watchlist ? `checked` : ``}>
+                  <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" data-list-checkbox ="watchlist" ${isWatchList ? `checked` : ``}>
                   <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist" data-list="watchlist">Add to watchlist</label>
 
-                  <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" data-list-checkbox ="history" ${history ? `checked` : ``}>
+                  <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" data-list-checkbox ="history" ${isWatched ? `checked` : ``}>
                   <label for="watched" class="film-details__control-label film-details__control-label--watched" data-list="history">Already watched</label>
 
-                  <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" data-list-checkbox ="favorites" ${favorites ? `checked` : ``}>
+                  <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" data-list-checkbox ="favorites" ${isFavorite ? `checked` : ``}>
                   <label for="favorite" class="film-details__control-label film-details__control-label--favorite" data-list="favorites">Add to favorites</label>
                 </section>
               </div>
@@ -126,7 +126,7 @@ export default class Popup extends SmartView {
     this._data = Popup.parseFilmToData(film);
 
     this._mouseDownHandler = this._mouseDownHandler.bind(this);
-    this._watchlistClickHandler = this._watchlistClickHandler.bind(this);
+    this._watchListClickHandler = this._watchListClickHandler.bind(this);
     this._watchedClickHandler = this._watchedClickHandler.bind(this);
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
   }
@@ -150,11 +150,11 @@ export default class Popup extends SmartView {
       .addEventListener(`mousedown`, this._mouseDownHandler);
   }
 
-  setWatchlistClickHandler(callback) {
-    this._callback.watchlistClick = callback;
+  setWatchListClickHandler(callback) {
+    this._callback.watchListClick = callback;
     this.getElement()
       .querySelector(`.film-details__control-label--watchlist`)
-      .addEventListener(`click`, this._watchlistClickHandler);
+      .addEventListener(`click`, this._watchListClickHandler);
   }
 
   setWatchedClickHandler(callback) {
@@ -179,11 +179,11 @@ export default class Popup extends SmartView {
     this._callback = {};
   }
 
-  removeWatchlistClickHandler() {
+  removeWatchListClickHandler() {
     this.getElement()
       .querySelector(`.film-details__control-label--watchlist`)
-      .removeEventListener(`click`, this._watchlistClickHandler);
-    this._callback.watchlistClick = null;
+      .removeEventListener(`click`, this._watchListClickHandler);
+    this._callback.watchListClick = null;
   }
 
   removeWatchedClickHandler() {
@@ -209,7 +209,7 @@ export default class Popup extends SmartView {
       .addEventListener(`mousedown`, this._mouseDownHandler);
     this.getElement()
       .querySelector(`.film-details__control-label--watchlist`)
-      .addEventListener(`click`, this._watchlistClickHandler);
+      .addEventListener(`click`, this._watchListClickHandler);
     this.getElement()
       .querySelector(`.film-details__control-label--watched`)
       .addEventListener(`click`, this._watchedClickHandler);
@@ -223,21 +223,21 @@ export default class Popup extends SmartView {
     this._callback.closePopup(evt);
   }
 
-  _watchlistClickHandler(evt) {
+  _watchListClickHandler(evt) {
     evt.preventDefault();
 
     this.updateData({
-      watchlist: !this._data.watchlist,
+      isWatchList: !this._data.isWatchList,
     });
 
-    this._callback.watchlistClick(Popup.parseDataToFilm(this._data));
+    this._callback.watchListClick(Popup.parseDataToFilm(this._data));
   }
 
   _watchedClickHandler(evt) {
     evt.preventDefault();
 
     this.updateData({
-      history: !this._data.history,
+      isWatched: !this._data.isWatched,
     });
 
     this._callback.watchedClick(Popup.parseDataToFilm(this._data));
@@ -247,7 +247,7 @@ export default class Popup extends SmartView {
     evt.preventDefault();
 
     this.updateData({
-      favorites: !this._data.favorites,
+      isFavorite: !this._data.isFavorite,
     });
 
     this._callback.favoriteClick(Popup.parseDataToFilm(this._data));
@@ -258,9 +258,9 @@ export default class Popup extends SmartView {
         {},
         film,
         {
-          watchlist: film.watchlist,
-          history: film.history,
-          favorites: film.favorites
+          isWatchList: film.isWatchList,
+          isWatched: film.isWatched,
+          isFavorite: film.isFavorite
         }
     );
   }

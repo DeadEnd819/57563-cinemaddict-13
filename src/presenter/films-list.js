@@ -6,7 +6,7 @@ import ButtonView from "../view/button.js";
 import LoadingFilmsView from "../view/loading-films.js";
 import FilmPresenter from "../presenter/film.js";
 import PopupPresenter from "../presenter/popup.js";
-import {sortElements, sortByDate, sortByRating} from "../utils/films.js";
+import {sortByDate, sortByRating, sortByComments} from "../utils/films.js";
 import {filter} from "../utils/filter.js";
 import {render, remove, RenderPosition} from "../utils/render.js";
 import {
@@ -272,7 +272,7 @@ export default class FilmList {
   }
 
   _renderProfileRating() {
-    this._profileRatingComponent.update(this._getFilms().slice());
+    this._profileRatingComponent.update(this._filmsModel.getFilms());
     const profile = this._head.querySelector(`.header__profile`);
 
     if (profile) {
@@ -303,9 +303,9 @@ export default class FilmList {
 
     switch (type) {
       case SortType.RATING:
-        return sortElements(listFilms, type).filter((film) => film[SortType.RATING] !== 0);
+        return listFilms.sort(sortByRating).filter((film) => film[SortType.RATING] !== 0);
       case SortType.COMMENTS:
-        return sortElements(listFilms, type).filter((film) => film[SortType.COMMENTS].length !== 0);
+        return listFilms.sort(sortByComments).filter((film) => film[SortType.COMMENTS].length !== 0);
       default:
         return listFilms;
     }

@@ -164,7 +164,7 @@ export default class Statistics extends Abstract {
   constructor(filmsModel) {
     super();
     this.filmsModel = filmsModel;
-    this._films = this.filmsModel.getFilms().filter((film) => film.history);
+    this._films = this.filmsModel.getFilms().filter((film) => film.isWatched);
     this._formChangeHandler = this._formChangeHandler.bind(this);
   }
 
@@ -238,7 +238,7 @@ export default class Statistics extends Abstract {
 
     Array.from(this.getElement().querySelectorAll(`.statistic__filters-input`)).forEach(
         (element) => {
-          const preparedFilms = this.filmsModel.getFilms().filter((film) => film.history);
+          const preparedFilms = this.filmsModel.getFilms().filter((film) => film.isWatched);
 
           if (element.checked) {
             switch (element.id) {

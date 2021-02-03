@@ -52,9 +52,9 @@ export default class Films extends Observer {
           writers: filmInfo.writers,
           actors: filmInfo.actors,
           watchingDate: userDetails.watching_date,
-          history: userDetails.already_watched,
-          favorites: userDetails.favorite,
-          watchlist: userDetails.watchlist,
+          isWatched: userDetails.already_watched,
+          isFavorite: userDetails.favorite,
+          isWatchList: userDetails.watchlist,
         }
     );
 
@@ -87,9 +87,9 @@ export default class Films extends Observer {
             }
           },
           "user_details": {
-            "already_watched": movie.history,
-            "favorite": movie.favorites,
-            "watchlist": movie.watchlist,
+            "already_watched": movie.isWatched,
+            "favorite": movie.isFavorite,
+            "watchlist": movie.isWatchList,
             "watching_date": movie.watchingDate,
           },
           "id": movie.id,
