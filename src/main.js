@@ -64,11 +64,13 @@ const handleStatsButtonClick = (menuItem) => {
 
       filterPresenter.init();
       filmListPresenter.init();
+      filterPresenter.removeActiveStats();
       remove(userStatisticsComponent);
       break;
     case MenuItem.STATS:
       filmListPresenter.destroy();
       filterPresenter.init();
+      filterPresenter.setActiveStats();
       userStatisticsComponent = new StatisticsView(filmsModel);
       render(siteMainElement, userStatisticsComponent, RenderPosition.BEFOREEND);
       userStatisticsComponent.getChart();

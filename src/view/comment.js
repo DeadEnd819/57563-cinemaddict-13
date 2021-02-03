@@ -3,6 +3,11 @@ import {UserAction, UpdateType} from "../utils/const.js";
 import he from "he";
 import moment from "moment";
 
+const ButtonText = {
+  DELETE: `Delete`,
+  DELETING: `Deleting...`
+};
+
 const createCommentTemplate = (comment) => {
   const date = comment.date;
   const timeAddComment = moment(date).fromNow();
@@ -61,7 +66,7 @@ export default class Comment extends SmartView {
       this.getElement()
         .querySelector(`.film-details__comment-delete`)
         .addEventListener(`click`, this._deleteClickHandler);
-      deleteButton.textContent = `Delete`;
+      deleteButton.textContent = ButtonText.DELETE;
     }, 700);
   }
 
@@ -76,7 +81,7 @@ export default class Comment extends SmartView {
       .querySelector(`.film-details__comment-delete`);
 
     deleteButton.disabled = true;
-    deleteButton.textContent = `Deleting…`;
+    deleteButton.textContent = ButtonText.DELETING;
     this._callback.deleteClick(UserAction.DELETE_COMMENT, UpdateType.MINOR, this._comment);
   }
 }

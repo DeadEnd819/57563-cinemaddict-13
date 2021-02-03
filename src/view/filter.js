@@ -10,7 +10,7 @@ const createFilterItemTemplate = (filter, currentFilterType) => {
   return `<a href="#${name}" class="main-navigation__item ${checked}" data-type="${type}">${name} ${counter}</a>`;
 };
 
-export const createFilterMenuTemplate = (filterItems, currentFilterType) => {
+const createFilterMenuTemplate = (filterItems, currentFilterType) => {
   const filterItemsTemplate = filterItems
     .map((filter) => createFilterItemTemplate(filter, currentFilterType))
     .join(``);
@@ -52,6 +52,22 @@ export default class Filter extends AbstractView {
     this.getElement()
       .querySelector(`.main-navigation__additional`)
       .addEventListener(`click`, this._statsClickHandler);
+  }
+
+  setActiveStatsButton() {
+    const activeFilterButton = this.getElement().querySelector(`.main-navigation__item--active`);
+    const statsButton = this.getElement().querySelector(`.main-navigation__additional`);
+
+    activeFilterButton.classList.remove(`main-navigation__item--active`);
+    statsButton.classList.add(`main-navigation__additional--active`);
+  }
+
+  removeActiveStatsButton() {
+    const activeStatsButton = this.getElement().querySelector(`.main-navigation__additional`);
+
+    if (activeStatsButton) {
+      activeStatsButton.classList.remove(`main-navigation__additional--active`);
+    }
   }
 
   _filterTypeChangeHandler(evt) {

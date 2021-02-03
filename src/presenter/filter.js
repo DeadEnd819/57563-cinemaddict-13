@@ -39,6 +39,14 @@ export default class Filter {
     remove(prevFilterComponent);
   }
 
+  setActiveStats() {
+    this._filterComponent.setActiveStatsButton();
+  }
+
+  removeActiveStats() {
+    this._filterComponent.removeActiveStatsButton();
+  }
+
   _modelEventHandler() {
     this.init();
   }
