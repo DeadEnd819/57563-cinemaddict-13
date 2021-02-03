@@ -414,12 +414,13 @@ export default class FilmList {
         .querySelector(`[data-type-container="${Containers.TOP}"]`);
 
       this._renderCards(topFilmContainer, 0, FILM_EXTRA_CARD_COUNT, SortType.RATING);
-    } else {
-      this._sectionFilmsComponent
-        .getElement()
-        .querySelectorAll(`.films-list--extra`)[0]
-        .remove();
+      return;
     }
+
+    this._sectionFilmsComponent
+      .getElement()
+      .querySelectorAll(`.films-list--extra`)[0]
+      .remove();
   }
 
   _createCommentedCardFilms() {
@@ -433,12 +434,13 @@ export default class FilmList {
         .querySelector(`[data-type-container="${Containers.COMMENTED}"]`);
 
       this._renderCards(commentedFilmContainer, 0, FILM_EXTRA_CARD_COUNT, SortType.COMMENTS);
-    } else {
-      this._sectionFilmsComponent
-        .getElement()
-        .querySelectorAll(`.films-list--extra`)[1]
-        .remove();
+      return;
     }
+
+    this._sectionFilmsComponent
+      .getElement()
+      .querySelectorAll(`.films-list--extra`)[1]
+      .remove();
   }
 
   _renderMain() {
